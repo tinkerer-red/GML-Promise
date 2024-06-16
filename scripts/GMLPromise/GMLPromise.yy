@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GMLPromise",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GMLPromise",
+  "parent":{
+    "name":"Promise",
+    "path":"folders/_Libraries/Promise.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

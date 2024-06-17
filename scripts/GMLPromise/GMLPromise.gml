@@ -1,3 +1,5 @@
+/// @title Core Promise
+
 #macro PROMISE_MAX_TIME (1/60 * 1_000 * 1_000) * (1/16) //the max time in milli seconds to spend on the promises, default is 1/16 of frame time of a 60 fps game
 
 enum PROMISE_STATE {
@@ -7,6 +9,13 @@ enum PROMISE_STATE {
 	PAUSED,
 };
 
+#region jsDoc
+/// @func    Promise()
+/// @desc    The Promise() constructor creates Promise objects. It is primarily used to wrap callback-based APIs that do not already support promises.
+/// @param   {Function} callback : A function to asynchronously execute when this promise becomes settled. Its return value is ignored unless the returned value is a rejected promise.
+/// @param   {Function} errback : A function to asynchronously execute when this promise becomes rejected. Its return value becomes the fulfillment value of the promise returned by catch().
+/// @returns {Struct.Promise}
+#endregion
 function Promise(_resolve_callback=undefined, _reject_callback=function(_reason){ show_debug_message("Promise Failed with error : "+_reason) }) constructor {
 	
 	// State and value of the promise
@@ -17,6 +26,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 	on_resolved = _resolve_callback;
 	on_rejected = _reject_callback;
 	
+	#region jsDoc
+	/// @func    Then()
+	/// @desc    The Then() method of Promise instances takes a callback function for the fulfilled case of the Promise. It immediately returns another Promise object, allowing you to chain calls to other promise methods.
+	/// @self    Promise
+	/// @param   {Function} callback : A function to asynchronously execute when this promise becomes fulfilled. Its return value becomes the fulfillment value of the promise returned by then().
+	/// @returns {Struct.Promise}
+	#endregion
 	static Then = function(_executor) {
 		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
 		
@@ -24,6 +40,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 		
 		return _this_promise;
 	};
+	#region jsDoc
+	/// @func    Catch()
+	/// @desc    The Catch() method of Promise instances schedules a function to be called when the promise is rejected. It immediately returns another Promise object, allowing you to chain calls to other promise methods.
+	/// @self    Promise
+	/// @param   {Function} errback : A function to asynchronously execute when this promise becomes rejected. Its return value becomes the fulfillment value of the promise returned by catch().
+	/// @returns {Struct.Promise}
+	#endregion
 	static Catch = function(_rejected_callback) {
 		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
 		
@@ -31,6 +54,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 		
 		return _this_promise;
 	};
+	#region jsDoc
+	/// @func    Finally()
+	/// @desc    The Finally() method of Promise instances schedules a function to be called when the promise is settled (either fulfilled or rejected). It immediately returns another Promise object, allowing you to chain calls to other promise methods.
+	/// @self    Promise
+	/// @param   {Function} callback : A function to asynchronously execute when this promise becomes settled. Its return value is ignored unless the returned value is a rejected promise.
+	/// @returns {Struct.Promise}
+	#endregion
 	static Finally = function(_resolved_callback) {
 		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
 		
@@ -39,6 +69,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 		return _this_promise;
 	};
 	
+	#region jsDoc
+	/// @func    Resolve()
+	/// @desc    The Promise.Resolve() static method "resolves" a given value to a Promise. If the value is a promise, that promise is returned; if the value is a thenable, Promise.Resolve() will call the then() method with two callbacks it prepared; otherwise the returned promise will be fulfilled with the value.
+	/// @self    Promise
+	/// @param   {Any} value : Argument to be resolved by this Promise. Can also be a Promise or a thenable to resolve.
+	/// @returns {Struct.Promise}
+	#endregion
 	static Resolve = function(_value) {
 		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
 		
@@ -47,6 +84,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 			
 		return _this_promise;
 	};
+	#region jsDoc
+	/// @func    Reject()
+	/// @desc    The Promise.reject() static method returns a Promise object that is rejected with a given reason.
+	/// @self    Promise
+	/// @param   {Any} reason : Reason why this Promise rejected.
+	/// @returns {Struct.Promise}
+	#endregion
 	static Reject = function(_reason) {
 		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
 		
@@ -58,6 +102,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 	
 	#region Promise Parenting
 	
+	#region jsDoc
+	/// @func    All()
+	/// @desc    The Promise.All() static method takes an iterable of promises as input and returns a single Promise. This returned promise fulfills when all of the input's promises fulfill (including when an empty iterable is passed), with an array of the fulfillment values. It rejects when any of the input's promises rejects, with this first rejection reason.
+	/// @self    Promise
+	/// @param   {Array<Struct.Promise>} arr_of_promises : Array of Promises to be used as children
+	/// @returns {Struct.Promise}
+	#endregion
 	static All = function(_arr_of_promises) {
 		var _parent_promise = new Promise();
 		
@@ -94,6 +145,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 	};
 	
 	//wait for all to finish, then get reports
+	#region jsDoc
+	/// @func    AllSettled()
+	/// @desc    The Promise.AllSettled() static method takes an iterable of promises as input and returns a single Promise. This returned promise fulfills when all of the input's promises settle (including when an empty iterable is passed), with an array of objects that describe the outcome of each promise.
+	/// @self    Promise
+	/// @param   {Array<Struct.Promise>} arr_of_promises : Array of Promises to be used as children
+	/// @returns {Struct.Promise}
+	#endregion
 	static AllSettled = function(_arr_of_promises) {
 		var _parent_promise = new Promise();
 		
@@ -133,6 +191,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 	};
 	
 	//if any succeed
+	#region jsDoc
+	/// @func    Any()
+	/// @desc    The Promise.any() static method takes an iterable of promises as input and returns a single Promise. This returned promise fulfills when any of the input's promises fulfills, with this first fulfillment value. It rejects when all of the input's promises reject (including when an empty iterable is passed), with an AggregateError containing an array of rejection reasons.
+	/// @self    Promise
+	/// @param   {Array<Struct.Promise>} arr_of_promises : Array of Promises to be used as children
+	/// @returns {Struct.Promise}
+	#endregion
 	static Any = function(_arr_of_promises) {
 		var _parent_promise = new Promise();
 		
@@ -166,6 +231,13 @@ function Promise(_resolve_callback=undefined, _reject_callback=function(_reason)
 	};
 	
 	//first come first server
+	#region jsDoc
+	/// @func    Race()
+	/// @desc    The Promise.Race() static method takes an iterable of promises as input and returns a single Promise. This returned promise settles with the eventual state of the first promise that settles.
+	/// @self    Promise
+	/// @param   {Array<Struct.Promise>} arr_of_promises : Array of Promises to be used as children
+	/// @returns {Struct.Promise}
+	#endregion
 	static Race = function(_arr_of_promises) {
 		var _parent_promise = new Promise();
 		

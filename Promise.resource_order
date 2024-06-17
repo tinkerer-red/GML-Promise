@@ -1,0 +1,22 @@
+{
+  "FolderOrderSettings":[
+    {"name":"_Libraries","order":11,"path":"folders/_Libraries.yy",},
+    {"name":"Promise","order":1,"path":"folders/_Libraries/Promise.yy",},
+    {"name":"Private","order":3,"path":"folders/_Libraries/Promise/Private.yy",},
+    {"name":"Rooms","order":10,"path":"folders/Rooms.yy",},
+    {"name":"Tome","order":13,"path":"folders/Tome.yy",},
+    {"name":"_system","order":1,"path":"folders/Tome/_system.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"__tomeController","order":1,"path":"objects/__tomeController/__tomeController.yy",},
+    {"name":"Object2","order":12,"path":"objects/Object2/Object2.yy",},
+    {"name":"__privPromise","order":1,"path":"scripts/__privPromise/__privPromise.yy",},
+    {"name":"__tomeFuncQueue","order":2,"path":"scripts/__tomeFuncQueue/__tomeFuncQueue.yy",},
+    {"name":"__tomeInit","order":3,"path":"scripts/__tomeInit/__tomeInit.yy",},
+    {"name":"__tomeSystemFunctions","order":4,"path":"scripts/__tomeSystemFunctions/__tomeSystemFunctions.yy",},
+    {"name":"GMLPromise","order":1,"path":"scripts/GMLPromise/GMLPromise.yy",},
+    {"name":"GMLPromiseFunctions","order":2,"path":"scripts/GMLPromiseFunctions/GMLPromiseFunctions.yy",},
+    {"name":"tomeConfig","order":2,"path":"scripts/tomeConfig/tomeConfig.yy",},
+    {"name":"tomeDocSetup","order":3,"path":"scripts/tomeDocSetup/tomeDocSetup.yy",},
+  ],
+}

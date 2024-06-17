@@ -1,4 +1,4 @@
-# GML Promises v1.0.0
+# GML Promises
 Asynchronous Handling for GameMaker 2022.5+
 
 ## [Docs](https://tinkerer-red.github.io/GML-Promise/#/1.0/)

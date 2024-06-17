@@ -1,6 +1,8 @@
 # GML Promises v1.0.0
 Asynchronous Handling for GameMaker 2022.5+
 
+## [Docs](https://tinkerer-red.github.io/GML-Promise/#/1.0/)
+
 ### Quick Disclaimer!
 This library does not introduce true multithreading into GML but allows asynchronous operations to be handled more predictably through promises. This is similar to breaking down code to be spread across several frames rather than executing long operations directly within a step event, potentially blocking the main game loop.
 

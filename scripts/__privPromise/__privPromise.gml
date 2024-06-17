@@ -76,6 +76,8 @@ function __handleAsyncEvent(_async_type, _async_load) {
 function __registerAsyncHandler(_async_type, _async_id, _resolve_callback, _reject_callback) {
 	static __global = __PromiseNamespace__();
 	
+	if (_resolve_callback == undefined) _resolve_callback = function(){};
+	
 	var _promise = Promise.Then(_resolve_callback).Catch(_reject_callback);
 	_promise.state = PROMISE_STATE.PAUSED;
 	

@@ -181,12 +181,14 @@
 #endregion
 
 #region Async Events
-http_get_promise("https://github.com/tinkerer-red", function(_async_load){
-	show_debug_message(_async_load.url)
-}, function(_error){
-	show_debug_message(_error)
+http_get_promise("https://github.com/tinkerer-red")
+.Then(function(_async_load){
+	show_debug_message("URL :: "+string(_async_load.url))
 })
 .Then(function(_async_load){
-	show_debug_message(_async_load.http_status)
+	show_debug_message("Http Status :: "+string(_async_load.http_status))
+})
+.Catch(function(_error){
+	show_debug_message(_error)
 })
 #endregion

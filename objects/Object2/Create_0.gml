@@ -1,10 +1,14 @@
 #region Promise
 	
 	//Promise
-	new Promise(function(_value){
+	new Promise(function(){
+		//do any random thing you want, and return a value to the finally function
+		return 1+1;
+	})
+	.Finally(function(_value){
 		show_debug_message("Promise Working correctly\n")
-	},
-	function(_error){
+	})
+	.Catch(function(_error){
 		show_debug_message("Promise Failed with error :: "+_error)
 	})
 	

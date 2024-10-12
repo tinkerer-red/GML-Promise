@@ -17,15 +17,15 @@ enum PROMISE_STATE {
 /// @param   {Function} errback : A function to asynchronously execute when this promise becomes rejected. Its return value becomes the fulfillment value of the promise returned by catch().
 /// @returns {Struct.Promise}
 #endregion
-function Promise(_resolve_callback=undefined, _reject_callback=function(_reason){ show_debug_message("Promise Failed with error : "+_reason) }) constructor {
+function Promise(_executor) constructor {
 	
 	// State and value of the promise
-	executors = [];
+	executors = (_executor == undefined) ? [] : [_executor];
 	state = PROMISE_STATE.PENDING;
 	value = undefined;
 	reason = undefined;
-	on_resolved = _resolve_callback;
-	on_rejected = _reject_callback;
+	on_resolved = undefined;
+	on_rejected = function(_reason){ show_debug_message("Promise Failed with error : "+_reason) };
 	
 	#region jsDoc
 	/// @method    Then()

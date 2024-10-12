@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"GMLPromise",
   "isCompatibility":false,
   "isDnD":false,

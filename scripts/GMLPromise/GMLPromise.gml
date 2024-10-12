@@ -13,8 +13,7 @@ enum PROMISE_STATE {
 /// @func    Promise()
 /// @constructor
 /// @desc    The Promise() constructor creates Promise objects. It is primarily used to wrap callback-based APIs that do not already support promises.
-/// @param   {Function} callback : A function to asynchronously execute when this promise becomes settled. Its return value is ignored unless the returned value is a rejected promise.
-/// @param   {Function} errback : A function to asynchronously execute when this promise becomes rejected. Its return value becomes the fulfillment value of the promise returned by catch().
+/// @param   {Function} task : A function to asynchronously execute after the previous step. Its return value becomes the fulfillment value of the promise returned by then().
 /// @returns {Struct.Promise}
 #endregion
 function Promise(_executor) constructor {
@@ -31,7 +30,7 @@ function Promise(_executor) constructor {
 	/// @method    Then()
 	/// @desc    The Then() method of Promise instances takes a callback function for the fulfilled case of the Promise. It immediately returns another Promise object, allowing you to chain calls to other promise methods.
 	/// @self    Promise
-	/// @param   {Function} callback : A function to asynchronously execute when this promise becomes fulfilled. Its return value becomes the fulfillment value of the promise returned by then().
+	/// @param   {Function} task : A function to asynchronously execute after the previous step. Its return value becomes the fulfillment value of the promise returned by then().
 	/// @returns {Struct.Promise}
 	#endregion
 	static Then = function(_executor) {

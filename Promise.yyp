@@ -16,7 +16,7 @@
     {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"GML.Promise.yymps","CopyToMask":-1,"filePath":"datafiles","name":"GML.Promise.yymps","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"GML Promise.yymps","CopyToMask":-1,"filePath":"datafiles","name":"GML Promise.yymps","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],

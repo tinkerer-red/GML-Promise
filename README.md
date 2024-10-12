@@ -11,7 +11,7 @@ If you need any assistance, feel free to raise issues directly on this GitHub re
 This library mimics the JavaScript Promise model, making it possible to manage asynchronous operations like HTTP requests, file loading/saving, and more, directly within GameMaker Studio using a familiar promise-based approach.
 
 ## Features
-- Asynchronous operations return promises that can be chained with `.then`, `.catch`, and `.finally`.
+- Asynchronous operations return promises that can be chained with `.Then`, `.Catch`, and `.Finally`.
 - Supports handling multiple asynchronous types like HTTP requests, file operations, and audio management.
 - Promises in this library can be resolved or rejected manually, and handlers can be attached even after the promise has settled.
 

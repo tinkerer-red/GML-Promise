@@ -5,12 +5,13 @@ function __PromiseNamespace__() {
 		promises_time_source : time_source_create(time_source_game, 1, time_source_units_frames, function() {
 			static __global = __PromiseNamespace__()
 			//handle all of the currently active processes
-			var _time_to_live = get_timer() + PROMISE_MAX_TIME;
+			__global.postpone_task_removal = false; //reset just incase someone is calling this outside of a promise function.
+			__global.time_to_live = get_timer() + PROMISE_MAX_TIME;
 			
 			var _i=0; repeat(array_length(__global.active_promises)) {
 				var _promise = __global.active_promises[_i];
 				
-				_promise.Execute(_time_to_live);
+				_promise.Execute(__global.time_to_live);
 				
 				if (_promise.state == PROMISE_STATE.RESOLVED)
 				|| (_promise.state == PROMISE_STATE.REJECTED) {
@@ -19,7 +20,7 @@ function __PromiseNamespace__() {
 				}
 				
 				//early out
-				if (get_timer() >= _time_to_live) {
+				if (get_timer() >= __global.time_to_live) {
 					break;
 				}
 				
@@ -38,6 +39,8 @@ function __PromiseNamespace__() {
 		}, [], 1),
 		active_promises : [],
 		async_handlers: {},
+		time_to_live: get_timer() + PROMISE_MAX_TIME,
+		postpone_task_removal: false,
 	};
 	
 	return __global;
@@ -78,7 +81,7 @@ function __registerAsyncHandler(_async_type, _async_id, _resolve_callback, _reje
 	
 	if (_resolve_callback == undefined) _resolve_callback = function(){};
 	
-	var _promise = Promise(_resolve_callback).Catch(_reject_callback);
+	var _promise = Promise.Finally(_resolve_callback).Catch(_reject_callback);
 	_promise.state = PROMISE_STATE.PAUSED;
 	
 	var _resolve = method(_promise, function(_async_load){

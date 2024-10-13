@@ -275,6 +275,8 @@ function Promise(_executor) constructor {
 	
 	//note providing no start time will force the promise to execute all sub processes
 	static Execute = function(_time_to_live=infinity) {
+		static __global = __PromiseNamespace__.__global;
+		
 		if (state == PROMISE_STATE.PAUSED) {
 			return;
 		}
@@ -285,7 +287,14 @@ function Promise(_executor) constructor {
 					var _j=0; repeat(array_length(executors)) {
 						var _executor = executors[0];
 						var _val = _executor(value);
-						array_delete(executors, 0, 1);
+						
+						if (__global.postpone_task_removal) {
+							__global.postpone_task_removal = false;
+						}
+						else {
+							array_delete(executors, 0, 1);
+						}
+						
 						value = (is_undefined(_val)) ? value : _val;
 						
 						if (array_length(executors) == 0) {
@@ -344,6 +353,34 @@ function Promise(_executor) constructor {
 	return _promise;
 }
 
-//init statics and start timers
+
+/////////////////////////////////
+/// For Library and Tool creators
+/////////////////////////////////
+
+#region jsDoc
+/// @func    PromiseExceededFrameBudget()
+/// @desc    A helper function to assist library creators in knowing if the frame budget has been exceeded so they can exit their task.
+/// @returns {Bool}
+#endregion
+function PromiseExceededFrameBudget() {
+	static __global = __PromiseNamespace__.__global
+	return (get_timer() >= __global.time_to_live);
+}
+
+#region jsDoc
+/// @func    PromisePostponeTaskRemoval()
+/// @desc    A helper function to assist library creators to have better control of when to remove a currently active task/executor. This is commonly used when you have a single function which can execute across multiple frames, but it's not finished and you wish to keep the currently running task in the queue to be executred next frame.
+/// @returns {Bool}
+#endregion
+function PromisePostponeTaskRemoval() {
+	static __global = __PromiseNamespace__.__global
+	__global.postpone_task_removal = true;
+}
+
+
+
+#region init statics and start timers
 new Promise();
 time_source_start(__PromiseNamespace__.__global.async_obj_spawn_time_source);
+#endregion

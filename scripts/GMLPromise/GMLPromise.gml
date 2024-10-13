@@ -1,6 +1,6 @@
 /// @title Core Promise
 
-#macro PROMISE_MAX_TIME (1/60 * 1_000 * 1_000) * (1/16) //the max time in milli seconds to spend on the promises, default is 1/16 of frame time of a 60 fps game
+#macro PROMISE_MAX_TIME (1/game_get_speed(gamespeed_fps) * 1_000_000) * (1/8) //the max time in milli seconds to spend on the promises, default is 1/16 of frame time of a 60 fps game
 
 enum PROMISE_STATE {
 	PENDING,

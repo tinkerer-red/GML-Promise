@@ -11,10 +11,17 @@ function __PromiseNamespace__() {
 			var _i=0; repeat(array_length(__global.active_promises)) {
 				var _promise = __global.active_promises[_i];
 				
+				if (_promise.state == PROMISE_STATE.CANCELED) {
+					array_delete(__global.active_promises, _i, 1);
+					continue;
+				}
+				
 				_promise.Execute(__global.time_to_live);
 				
 				if (_promise.state == PROMISE_STATE.RESOLVED)
-				|| (_promise.state == PROMISE_STATE.REJECTED) {
+				|| (_promise.state == PROMISE_STATE.REJECTED)
+				|| (_promise.state == PROMISE_STATE.CANCELED)
+				{
 					array_delete(__global.active_promises, _i, 1);
 					_i-=1;
 				}

@@ -49,6 +49,33 @@
 		show_debug_message("Promise.Catch Working correctly\n")
 	})
 	
+	//Promise with Cancel
+	Promise.Then(function(_value){
+		show_debug_message("Promise.Cancel :: FAILED\n");
+	})
+	.Cancel()
+	.Finally(function(_value) {
+		show_debug_message("Promise.Cancel :: FAILED\n");
+	})
+	.Catch(function(_reason){
+		show_debug_message("Promise failed with reason: " + _reason);
+		show_debug_message("Promise.Cancel :: FAILED\n");
+	})
+	
+	//Promise with Pause
+	Promise.Then(function(_value){
+		// this shouldn't log anything at all
+	})
+	.Pause()
+	.Finally(function(_value) {
+		show_debug_message("Promise.Pause :: FAILED\n");
+	})
+	.Catch(function(_reason){
+		show_debug_message("Promise failed with reason: " + _reason);
+		show_debug_message("Promise.Pause :: FAILED\n");
+	})
+	
+	
 #endregion
 
 #region Promise.All
@@ -191,6 +218,9 @@ http_get_promise("https://github.com/tinkerer-red")
 })
 .Then(function(_async_load){
 	show_debug_message("Http Status :: "+string(_async_load.http_status))
+})
+.Then(function(_async_load){
+	show_debug_message("http_get_promise Working correctly")
 })
 .Catch(function(_error){
 	show_debug_message(_error)

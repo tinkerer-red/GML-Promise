@@ -7,6 +7,7 @@ enum PROMISE_STATE {
 	RESOLVED,
 	REJECTED,
 	PAUSED,
+	CANCELED,
 };
 
 #region jsDoc
@@ -99,6 +100,53 @@ function Promise(_executor) constructor {
 		
 		return _this_promise;
 	};
+	
+	
+	#region jsDoc
+	/// @method    Pause()
+	/// @desc    Pauses the Promise from any execution.
+	/// @self    Promise
+	/// @param   {Function} task : A function to asynchronously execute after the previous step. Its return value becomes the fulfillment value of the promise returned by then().
+	/// @returns {Struct.Promise}
+	#endregion
+	static Pause = function() {
+		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
+		
+		state = PROMISE_STATE.PAUSED;
+		
+		return _this_promise;
+	};
+	#region jsDoc
+	/// @method    Resume()
+	/// @desc    Resumes the execution of the Promise.
+	/// @self    Promise
+	/// @param   {Function} errback : A function to asynchronously execute when this promise becomes rejected. Its return value becomes the fulfillment value of the promise returned by catch().
+	/// @returns {Struct.Promise}
+	#endregion
+	static Resume = function() {
+		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
+		
+		state = PROMISE_STATE.PENDING;
+		
+		return _this_promise;
+	};
+	#region jsDoc
+	/// @method    Cancel()
+	/// @desc    Cancel All execution of the promise, this includes prevention of callbacks and errorbacks
+	/// @self    Promise
+	/// @param   {Function} callback : A function to asynchronously execute when this promise becomes settled. Its return value is ignored unless the returned value is a rejected promise.
+	/// @returns {Struct.Promise}
+	#endregion
+	static Cancel = function(_reason="Canceled manually.") {
+		var _this_promise = (is_instanceof(self, Promise)) ? self : new Promise();
+		
+		_this_promise.state = PROMISE_STATE.CANCELED;
+		_this_promise.reason = _reason;
+		
+		return _this_promise;
+	};
+	
+	
 	
 	#region Promise Parenting
 	
@@ -293,20 +341,22 @@ function Promise(_executor) constructor {
 						}
 						else {
 							array_delete(executors, 0, 1);
+							value = (is_undefined(_val)) ? value : _val;
 						}
 						
-						value = (is_undefined(_val)) ? value : _val;
+						//early out
+						if (state == PROMISE_STATE.PAUSED)
+						|| (state == PROMISE_STATE.CANCELED)
+						|| (get_timer() >= _time_to_live)
+						{
+							break;
+						}
 						
 						if (array_length(executors) == 0) {
 							state = PROMISE_STATE.RESOLVED;
 							break;
 						}
 						
-						//early out
-						if (get_timer() >= _time_to_live) {
-							break;
-						}
-							
 					_j+=1;}//end repeat loop
 				}
 				catch (_error) {

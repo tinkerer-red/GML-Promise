@@ -294,8 +294,17 @@ function http_request_promise(
 	_reject_callback=function(_reason){ show_debug_message("Promise :: http_request_promise :: Failed with error : "+_reason) }
 )
 {
+	var _should_delete = false;
+	if (is_struct(header_map)) {
+		header_map = json_decode(json_stringify(header_map));
+		_should_delete = true;
+	};
+	
 	var _async_type = ASYNC_EVENT.HTTP;
 	var _async_id = http_request(url, _method, header_map, body);
+	
+	if (_should_delete) ds_map_destroy(header_map);
+	
 	return __registerAsyncHandler(_async_type, _async_id, _resolve_callback, _reject_callback);
 }
 #region jsDoc

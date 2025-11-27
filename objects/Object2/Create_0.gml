@@ -75,7 +75,11 @@
 		show_debug_message("Promise.Pause :: FAILED\n");
 	})
 	
-	
+	//Promise with Wait
+	Promise.Then(function(){ show_debug_message("[Wait Test] === Hello!") })
+	.Wait(3)
+	.Then( function() { show_debug_message("[Wait Test] === WORLD!") } )
+
 #endregion
 
 #region Promise.All
@@ -226,3 +230,4 @@ http_get_promise("https://github.com/tinkerer-red")
 	show_debug_message(_error)
 })
 #endregion
+
